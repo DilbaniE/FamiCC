@@ -1,0 +1,8 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:5173",
+"LaunchCommand": "npm run dev",
+"WorkingDirectory": "C:\\Users\\ASUS\\source\\repos\\famiCC_V1_____CARPETA\\famiCCV1.Server\\..\\famiccv1.client",
+"MaxTimeoutInSeconds": "120"
+}
+}
