@@ -1,5 +1,6 @@
 ﻿using famiCCV1.Server.Models;
 using famiCCV1.Server.Servicios.IServices;
+using famiCCV1.Server.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,20 +18,64 @@ namespace famiCCV1.Server.Controllers
             _documentTypeService = documentTypeService;
         }
 
+
+        //Metod POST 
         [HttpPost]
-        [Route("SaveDocumentType")]
-        public async Task<IActionResult> SaveDocumentType([FromBody] DocumentType request)
+        [Route("Save")]
+        public async Task<IActionResult> Save([FromBody] DocumentTypeViewModel documentTypeViewModel)
         {
-            var id = await _documentTypeService.SaveDocumentTypeAsync(request);
-            return StatusCode(StatusCodes.Status200OK, $"DocumentType created with ID: {id}");
+            var id = await _documentTypeService.SaveDocumentTypeAsync(documentTypeViewModel);
+            return Ok(id);
         }
 
+
+        // Metod GETALL
         [HttpGet]
-        [Route("ViewDocumentType")]
-        public async Task<IActionResult> DocumentType()
+        [Route("ViewAll")]
+        public async Task<IActionResult> ViewAll()
         {
-            var documentTypes = await _documentTypeService.GetDocumentTypesAsync();
-            return StatusCode(StatusCodes.Status200OK, documentTypes);
+            var documentTypes = await _documentTypeService.GetAllDocumentTypesAsync();
+            return Ok(documentTypes);
+        }
+
+        //METOD GETID
+        [HttpGet]
+        [Route("View/{id}")]
+        public async Task<IActionResult> View(int id)
+        {
+            var documentType = await _documentTypeService.GetDocumentTypeByIdAsync(id);
+
+            if (documentType == null)
+                return NotFound("DocumentType not found");
+
+            return Ok(documentType);
+        }
+
+
+        //METOD PUT
+        [HttpPut]
+        [Route("Update")]
+        public async Task<IActionResult> Update([FromBody] DocumentTypeViewModel documentTypeViewModel)
+        {
+            var isUpdated = await _documentTypeService.UpdateDocumentTypeAsync(documentTypeViewModel);
+
+            if (isUpdated)
+                return Ok("DocumentType updated successfully");
+            else
+                return NotFound("DocumentType not found or update failed");
+        }
+
+        //DELETE METOD 
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var isDeleted = await _documentTypeService.DeleteDocumentTypeAsync(id);
+
+            if (isDeleted)
+                return Ok("DocumentType deleted successfully");
+            else
+                return NotFound("DocumentType not found or delete failed");
         }
     }
 }

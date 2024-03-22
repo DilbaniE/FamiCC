@@ -1,10 +1,25 @@
 ﻿using famiCCV1.Server.Models;
+using famiCCV1.Server.ViewModels;
 
 namespace famiCCV1.Server.Servicios.IServices
 {
     public interface IDocumentTypeService
     {
-        Task<int> SaveDocumentTypeAsync(DocumentType documentType);
-        Task<List<DocumentType>> GetDocumentTypesAsync();
+        //SAVE
+        Task<int> SaveDocumentTypeAsync(DocumentTypeViewModel documentTypeViewModel);
+
+        //GEALL
+        Task<List<DocumentTypeViewModel>> GetAllDocumentTypesAsync();
+
+        //GetId
+        Task<DocumentTypeViewModel> GetDocumentTypeByIdAsync(int id);
+
+        //UPDATE
+        Task<bool> UpdateDocumentTypeAsync(DocumentTypeViewModel documentTypeViewModel);
+
+        //DELETE 
+        Task<bool> DeleteDocumentTypeAsync(int id);
+
+
     }
 }
