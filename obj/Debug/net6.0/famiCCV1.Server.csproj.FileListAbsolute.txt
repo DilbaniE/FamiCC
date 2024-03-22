@@ -134,3 +134,4 @@ C:\Users\ASUS\source\repos\famiCC_V1_____CARPETA\famiCCV1.Server\obj\Debug\net6.
 C:\Users\ASUS\source\repos\famiCC_V1_____CARPETA\famiCCV1.Server\obj\Debug\net6.0\famiCCV1.Server.pdb
 C:\Users\ASUS\source\repos\famiCC_V1_____CARPETA\famiCCV1.Server\obj\Debug\net6.0\famiCCV1.Server.genruntimeconfig.cache
 C:\Users\ASUS\source\repos\famiCC_V1_____CARPETA\famiCCV1.Server\obj\Debug\net6.0\ref\famiCCV1.Server.dll
+C:\Users\ASUS\source\repos\famiCC_V1_____CARPETA\famiCCV1.Server\obj\Debug\net6.0\famiCCV1.Server.sourcelink.json
