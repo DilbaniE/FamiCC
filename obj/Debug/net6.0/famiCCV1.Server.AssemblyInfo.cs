@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("famiCCV1.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aab3a9440c6c10a4dc6f259670f4aca5eb18eacd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+84a3d414b5754122cb763607a3e5d788a39f23ae")]
 [assembly: System.Reflection.AssemblyProductAttribute("famiCCV1.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("famiCCV1.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

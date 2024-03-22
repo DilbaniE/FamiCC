@@ -17,11 +17,39 @@ namespace famiCCV1.Server.Controllers
         }
 
         [HttpPost]
-        [Route("SaveRepresentative")]
-        public async Task<IActionResult> SaveRepresentative([FromBody] RepresentativeViewModel request)
+        [Route("Save")]
+        public async Task<IActionResult> Save([FromBody] RepresentativeViewModel representativeViewModel)
         {
-            var id = await _representativeService.SaveRepresentativeAsync(request);
-            return StatusCode(StatusCodes.Status200OK, $"Representative created with ID: {id}");
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid model state");
+
+            var representativeId = await _representativeService.SaveRepresentativeAsync(representativeViewModel);
+            return Ok(representativeId);
+        }
+
+
+        [Route("ViewAll")]
+        public async Task<IActionResult> ViewAll()
+        {
+            var representatives = await _representativeService.GetAllRepresentativesAsync();
+            return Ok(representatives);
+        }
+
+        // Update
+
+
+        [HttpPut]
+        [Route("Update/{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] RepresentativeViewModel representativeViewModel)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid model state");
+
+            var result = await _representativeService.UpdateRepresentativeAsync(id, representativeViewModel);
+            if (!result)
+                return NotFound("Representative not found");
+
+            return Ok("Representative updated successfully");
         }
     }
 }
