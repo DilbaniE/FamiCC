@@ -1,6 +1,7 @@
 ﻿using famiCCV1.Server.Models;
 using famiCCV1.Server.Servicios.IServices;
 using famiCCV1.Server.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace famiCCV1.Server.Servicios
 {
@@ -25,6 +26,20 @@ namespace famiCCV1.Server.Servicios
             await _dbContext.SaveChangesAsync();
 
             return proponentDocument.Id;
+        }
+
+        //METOD GETALL
+        public async Task<List<ProponentDocumentViewModel>> GetAllProponentDocumentsAsync()
+        {
+            var proponentDocuments = await _dbContext.ProponentDocuments
+                .Select(pd => new ProponentDocumentViewModel
+                {
+                    FkAdjuntdocumentId = pd.FkAdjuntdocumentId,
+                    FkProposedId = pd.FkProposedId
+                })
+                .ToListAsync();
+
+            return proponentDocuments;
         }
     }
 

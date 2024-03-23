@@ -72,6 +72,28 @@ namespace famiCCV1.Server.Servicios
             return true; // Actualización exitosa
         }
 
+        //delete
+
+        public async Task<bool> DeleteRepresentativeAsync(int id)
+        {
+            var existingRepresentative = await _dbContext.Representatives.FindAsync(id);
+            if (existingRepresentative == null)
+            {
+                return false; // No se encontró el representante con el ID dado
+            }
+
+            _dbContext.Representatives.Remove(existingRepresentative);
+            await _dbContext.SaveChangesAsync();
+
+            return true; // Eliminación exitosa
+        }
+
+
+
+
+
+
+
     }
 
 }

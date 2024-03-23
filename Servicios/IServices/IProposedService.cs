@@ -6,5 +6,13 @@ namespace famiCCV1.Server.Servicios.IServices
     {
         //Guardar
         Task<int> SaveProposedAsync(ProposedViewModel proposedViewModel);
+
+        //GETALL
+        Task<List<ProposedViewModel>> GetAllProposedAsync();
+
+        //GETALLDETAIL
+
+        Task<List<ProposedViewModelDetail>> GetAllProposedWithDetailsAsync();
+
     }
 }

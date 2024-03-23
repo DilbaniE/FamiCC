@@ -15,7 +15,7 @@ namespace famiCCV1.Server.Controllers
         {
             _proponentDocumentService = proponentDocumentService;
         }
-
+        //request POST
         [HttpPost]
         [Route("SaveProponentDocument")]
         public async Task<IActionResult> SaveProponentDocument([FromBody] ProponentDocumentViewModel request)
@@ -23,5 +23,16 @@ namespace famiCCV1.Server.Controllers
             var id = await _proponentDocumentService.SaveProponentDocumentAsync(request);
             return StatusCode(StatusCodes.Status200OK, $"ProponentDocument created with ID: {id}");
         }
+
+        //Request GET
+        [HttpGet]
+        [Route("ViewAll")]
+        public async Task<IActionResult> ViewAll()
+        {
+            var proponentDocuments = await _proponentDocumentService.GetAllProponentDocumentsAsync();
+            return Ok(proponentDocuments);
+        }
+
+
     }
 }

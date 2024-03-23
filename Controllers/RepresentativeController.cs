@@ -51,5 +51,22 @@ namespace famiCCV1.Server.Controllers
 
             return Ok("Representative updated successfully");
         }
+
+        //delete
+
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _representativeService.DeleteRepresentativeAsync(id);
+            if (!result)
+                return NotFound("Representative not found");
+
+            return Ok("Representative deleted successfully");
+        }
+
+
+
+
     }
 }

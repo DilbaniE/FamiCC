@@ -23,5 +23,33 @@ namespace famiCCV1.Server.Controllers
             var id = await _proponentService.SaveProponentAsync(request);
             return StatusCode(StatusCodes.Status200OK, $"Proponent created with ID: {id}");
         }
+
+        //vireAll
+
+        [HttpGet]
+        [Route("ViewAll")]
+        public async Task<IActionResult> ViewAll()
+        {
+            var proponents = await _proponentService.GetAllProponentsAsync();
+            return Ok(proponents);
+        }
+
+        //update
+
+        [HttpPut]
+        [Route("UpdateProponent/{id}")]
+        public async Task<IActionResult> UpdateProponent(int id, [FromBody] ProponentViewModel request)
+        {
+            var result = await _proponentService.UpdateProponentAsync(id, request);
+            if (!result)
+                return NotFound($"Proponent with ID {id} not found");
+
+            return Ok($"Proponent with ID {id} updated successfully");
+        }
+
+
+
+
+
     }
 }

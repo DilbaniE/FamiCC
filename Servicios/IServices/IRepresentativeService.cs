@@ -11,6 +11,10 @@ namespace famiCCV1.Server.Servicios.IServices
         Task<List<RepresentativeViewModel>> GetAllRepresentativesAsync();
         // update 
         Task<bool> UpdateRepresentativeAsync(int id, RepresentativeViewModel representativeViewModel);
+
+        //delete
+        Task<bool> DeleteRepresentativeAsync(int id);
+
     }
 
 

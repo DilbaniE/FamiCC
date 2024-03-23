@@ -1,6 +1,7 @@
 ﻿using famiCCV1.Server.Models;
 using famiCCV1.Server.Servicios.IServices;
 using famiCCV1.Server.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace famiCCV1.Server.Servicios
 {
@@ -28,6 +29,46 @@ namespace famiCCV1.Server.Servicios
 
             return proponent.Id;
         }
+
+        //viewAlll
+        public async Task<List<ProponentViewModel>> GetAllProponentsAsync()
+        {
+            var proponents = await _dbContext.Proponents
+                .Select(p => new ProponentViewModel
+                {
+                    NProponent = p.NProponent,
+                    Trajectory = p.Trajectory,
+                    FkRepresentativeId = p.FkRepresentativeId ?? 0,
+                    FkTproponentId = p.FkTproponentId ?? 0
+                })
+                .ToListAsync();
+
+            return proponents;
+        }
+
+        //update
+
+        public async Task<bool> UpdateProponentAsync(int id, ProponentViewModel proponentViewModel)
+        {
+            var existingProponent = await _dbContext.Proponents.FindAsync(id);
+
+            if (existingProponent == null)
+                return false;
+
+            existingProponent.NProponent = proponentViewModel.NProponent;
+            existingProponent.Trajectory = proponentViewModel.Trajectory;
+            existingProponent.FkRepresentativeId = proponentViewModel.FkRepresentativeId;
+            existingProponent.FkTproponentId = proponentViewModel.FkTproponentId;
+
+            _dbContext.Entry(existingProponent).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
+
+
+
     }
 
 }
