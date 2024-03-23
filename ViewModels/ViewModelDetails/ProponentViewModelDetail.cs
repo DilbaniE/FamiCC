@@ -8,9 +8,9 @@
         public int FkRepresentativeId { get; set; }
         public int FkTproponentId { get; set; }
         public RepresentativeViewModelDetail Representative { get; set; }
-        public ProponentTypeViewModel ProponentType { get; set; }
+        public ProponentTypeViewModelDetail ProponentType { get; set; }
 
-        public ProposedValueViewModel ProposedValue { get; set; }
+        //public ProposedValueViewModelDetail ProposedValue { get; set; }
     }
 
 }

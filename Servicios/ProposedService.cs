@@ -2,6 +2,7 @@
 using famiCCV1.Server.Servicios.IServices;
 using famiCCV1.Server.ViewModels;
 using famiCCV1.Server.ViewModels.ViewModelDetails;
+using famiCCV1.Server.ViewModels.ViewModelUpdate;
 using Microsoft.EntityFrameworkCore;
 
 namespace famiCCV1.Server.Servicios
@@ -107,18 +108,20 @@ namespace famiCCV1.Server.Servicios
                                 DocumentType1 = p.FkProponent.FkRepresentative.FkTdocument != null ? p.FkProponent.FkRepresentative.FkTdocument.DocumentType1 : string.Empty
                             }
                         },
-                        ProponentType = new ProponentTypeViewModel
+                        ProponentType = new ProponentTypeViewModelDetail
                         {
-                            //Id = p.FkProponent.FkTproponent.Id,
+                            Id = p.FkProponent.FkTproponent.Id,
                             ProponentType1 = p.FkProponent.FkTproponent.ProponentType1
-                        },
-                        ProposedValue = new ProposedValueViewModel
-                        {
-                            //Id = p.FkProposedvalue.Id,
-                            ContributionConfama = p.FkProposedvalue.ContributionConfama ?? 0,
-                            TotalAmount = p.FkProposedvalue.TotalAmount ?? 0
                         }
+                       
 
+                    },
+
+                    ProposedValue = new ProposedValueViewModelDetail
+                    {
+                        Id = p.FkProposedvalue.Id,
+                        ContributionConfama = p.FkProposedvalue.ContributionConfama ?? 0,
+                        TotalAmount = p.FkProposedvalue.TotalAmount ?? 0
                     },
                     ProponentDocuments = p.ProponentDocuments.Select(pd => new ProponentDocumentViewModelDetail
                         {
@@ -137,6 +140,102 @@ namespace famiCCV1.Server.Servicios
                     }).ToListAsync();
 
                 return proposedDetails;
+        }
+
+        public async Task UpdateProposedAsync(int id, UpdateProposedViewModel updateProposedViewModel)
+        {
+            var proposedToUpdate = await _dbContext.Proposeds.FindAsync(id);
+
+            if (proposedToUpdate == null)
+            {
+                throw new ArgumentException("Proposed not found.");
+            }
+
+            // Actualizar los datos de la propuesta
+            proposedToUpdate.DescriptionActivities = updateProposedViewModel.DescriptionActivities;
+            proposedToUpdate.DescripcionProposed = updateProposedViewModel.DescripcionProposed;
+            proposedToUpdate.AlliedCompany = updateProposedViewModel.AlliedCompany;
+            proposedToUpdate.ProposedState = updateProposedViewModel.ProposedState;
+            proposedToUpdate.DateStart = updateProposedViewModel.DateStart;
+            proposedToUpdate.PresentationDate = updateProposedViewModel.PresentationDate;
+            proposedToUpdate.NameProponen = updateProposedViewModel.NameProponen;
+            proposedToUpdate.BenefitedPublic = updateProposedViewModel.BenefitedPublic;
+
+            // Actualizar el proponente, el valor propuesto y los documentos del proponente
+
+            await _dbContext.SaveChangesAsync();
+        }
+
+        //UPDATE
+        //public async Task<bool> UpdateProposedAsync(int id, UpdateProposedViewModel updateProposedViewModel)
+        //{
+        //    var proposedToUpdate = await _dbContext.Proposeds.FindAsync(id);
+
+        //    if (proposedToUpdate == null)
+        //    {
+        //        // Manejar el caso en que la propuesta no existe
+        //        return false;
+        //    }
+
+        //    // Actualizar los datos de la propuesta
+        //    proposedToUpdate.DescriptionActivities = updateProposedViewModel.DescriptionActivities;
+        //    proposedToUpdate.DescripcionProposed = updateProposedViewModel.DescripcionProposed;
+        //    proposedToUpdate.AlliedCompany = updateProposedViewModel.AlliedCompany;
+        //    proposedToUpdate.ProposedState = updateProposedViewModel.ProposedState;
+        //    proposedToUpdate.DateStart = updateProposedViewModel.DateStart;
+        //    proposedToUpdate.PresentationDate = updateProposedViewModel.PresentationDate;
+        //    proposedToUpdate.NameProponen = updateProposedViewModel.NameProponen;
+        //    proposedToUpdate.BenefitedPublic = updateProposedViewModel.BenefitedPublic;
+
+        //    // Actualizar el proponente
+        //    var proponent = proposedToUpdate.FkProponent;
+        //    proponent.NProponent = updateProposedViewModel.Proponent.NProponent;
+        //    proponent.Trajectory = updateProposedViewModel.Proponent.Trajectory;
+
+        //    var representative = proponent.FkRepresentative;
+        //    representative.Email = updateProposedViewModel.Proponent.Representative.Email;
+        //    representative.NumDocument = updateProposedViewModel.Proponent.Representative.NumDocument;
+        //    representative.FirstName = updateProposedViewModel.Proponent.Representative.FirstName;
+        //    representative.LastName = updateProposedViewModel.Proponent.Representative.LastName;
+        //    representative.Phone = updateProposedViewModel.Proponent.Representative.Phone;
+
+        //    var documentType = representative.FkTdocument;
+        //    documentType.DocumentType1 = updateProposedViewModel.Proponent.Representative.DocumentType.DocumentType1;
+
+        //    var proponentType = proponent.FkTproponent;
+        //    proponentType.ProponentType1 = updateProposedViewModel.Proponent.ProponentType.ProponentType1;
+
+        //    // Actualizar el valor propuesto
+        //    var proposedValue = proposedToUpdate.FkProposedvalue;
+        //    proposedValue.ContributionConfama = updateProposedViewModel.ProposedValue.ContributionConfama;
+        //    proposedValue.TotalAmount = updateProposedViewModel.ProposedValue.TotalAmount;
+
+        //    // Actualizar los documentos del proponente
+        //    _dbContext.ProponentDocuments.RemoveRange(proposedToUpdate.ProponentDocuments);
+
+        //    proposedToUpdate.ProponentDocuments = updateProposedViewModel.ProponentDocuments
+        //        .Select(pd => new ProponentDocument
+        //        {
+        //            FkAdjuntdocumentId = pd.AdjuntDocument.Id
+        //        }).ToList();
+
+        //    await _dbContext.SaveChangesAsync();
+        //    return true;
+        //}
+
+        //DELETE
+
+        public async Task DeleteProposedAsync(int id)
+        {
+            var proposedToDelete = await _dbContext.Proposeds.FindAsync(id);
+
+            if (proposedToDelete == null)
+            {
+                throw new ArgumentException("Propuesta no encontrada.");
+            }
+
+            _dbContext.Proposeds.Remove(proposedToDelete);
+            await _dbContext.SaveChangesAsync();
         }
 
 

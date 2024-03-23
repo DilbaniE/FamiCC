@@ -40,7 +40,8 @@ namespace famiCCV1.Server.ViewModels
         public int FkProponentId { get; set; }
         public int FkProposedvalueId { get; set; }
         public ProponentViewModelDetail Proponent { get; set; }
-        public ProposedValueViewModel ProposedValue { get; set; }
+        //public ProposedValueViewModel ProposedValue { get; set; }
+        public ProposedValueViewModelDetail ProposedValue { get; set; }
         public List<ProponentDocumentViewModelDetail> ProponentDocuments { get; set; } // Aquí cambia el tipo de la lista
     }
 }

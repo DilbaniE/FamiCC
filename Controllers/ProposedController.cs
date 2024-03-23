@@ -1,5 +1,6 @@
 ﻿using famiCCV1.Server.Servicios.IServices;
 using famiCCV1.Server.ViewModels;
+using famiCCV1.Server.ViewModels.ViewModelUpdate;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,5 +44,41 @@ namespace famiCCV1.Server.Controllers
             var proposedDetails = await _proposedService.GetAllProposedWithDetailsAsync();
             return proposedDetails;
         }
+
+        //UpdateDetail
+        [HttpPut]
+        [Route("UpdateDetail")]
+        public async Task<IActionResult> UpdateDetail([FromBody] UpdateProposedViewModel request)
+        {
+            try
+            {
+                await _proposedService.UpdateProposedAsync(request.Id, request);
+                return Ok("Detalles de la propuesta actualizados correctamente.");
+            }
+            catch (Exception ex)
+            {
+                // Manejar cualquier excepción y devolver un código de estado apropiado
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Se produjo un error al actualizar los detalles de la propuesta: {ex.Message}");
+            }
+        }
+
+        //DELETE
+
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _proposedService.DeleteProposedAsync(id);
+                return Ok("Propuesta eliminada correctamente.");
+            }
+            catch (Exception ex)
+            {
+                // Manejar cualquier excepción y devolver un código de estado apropiado
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Se produjo un error al eliminar la propuesta: {ex.Message}");
+            }
+        }
+
     }
 }
